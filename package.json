@@ -1,0 +1,26 @@
+{
+  "name": "smash_scrap_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3cafes/smash_scrap_api.git"
+  },
+  "author": "cafe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/3cafes/smash_scrap_api/issues"
+  },
+  "homepage": "https://github.com/3cafes/smash_scrap_api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "prompts": "^2.4.0",
+    "puppeteer": "^5.5.0"
+  }
+}
