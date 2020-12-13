@@ -19,6 +19,7 @@
 	},
 	"homepage": "https://github.com/3cafes/smash_scrap_api#readme",
 	"dependencies": {
+		"cors": "^2.8.5",
 		"express": "^4.17.1",
 		"prompts": "^2.4.0",
 		"puppeteer": "^5.5.0"

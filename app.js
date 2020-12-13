@@ -1,13 +1,14 @@
 const e = require('express');
 const express = require('express');
 const prompts = require('prompts');
+const cors = require('cors');
 const scraper = require('./scraper');
 
 const app = express();
 const port = 3001;
 
+app.use(cors());
 app.use('/api', require('./routes'));
-
 app.listen(port, async () => {
 	await scraper.init();
 
