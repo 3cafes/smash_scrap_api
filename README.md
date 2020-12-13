@@ -1,15 +1,25 @@
 # smash_scrap_api
 
-# init ddb
+## setup
 
-go to prisma/.env and set database url
-'mysql://USER:PASSWORD@HOST:PORT/DATABASE'
+1. **aller dans le dossier prisma et modifier la variable DATABASE_URL**
+   'mysql://USER:PASSWORD@HOST:PORT/DATABASE'
 
-then use this command to generate the ddb import file
-npx prisma migrate dev --name init --preview-feature
+2. **initializer la base de donnée**
+   npx prisma migrate dev --preview-feature
 
-dev:
+3. **générer le client prisma**
+   npx prisma generate
+
+4. **prisma ne supporte pas encore les blob (oups, j'aurais du utiliser sequelize) se connecter à la base de donnée mysql et faire les commandes suivantes:**
+
+   use smash_scrap
+   alter table Player modify img_blob BLOB(65536);
+
+## run
+
+**developpment:**
 npm run dev
 
-start:
+**start:**
 npm start
