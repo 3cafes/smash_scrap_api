@@ -1,0 +1,11 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id        Int     @default(autoincrement()) @id
+  player_id String
+  name      String
+  img_blobl String
+}
