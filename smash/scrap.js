@@ -1,4 +1,4 @@
-const scraper = require.main.require('./src/scraper');
+const scraper = require.main.require('./scraper');
 
 const BASE_URL = 'https://www.smashbros.com';
 
