@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer');
 
 var browser = null;
 
@@ -19,9 +19,10 @@ async function scrap_image(url) {
 	console.log(`downloading image [${url}]...`);
 	const page = await browser.newPage();
 	const source = await page.goto(url);
-	const blob = await source.buffer();
+	const buffer = await source.buffer();
+	const b64 = buffer.toString('base64');
 	page.close();
-	return blob;
+	return b64;
 }
 
 module.exports = {
