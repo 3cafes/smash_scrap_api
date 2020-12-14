@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { scrap_players } = require.main.require('./scraper/player');
 const db = require.main.require('./database');
+const { update_players } = require.main.require('./smash_scrap');
 
 router.get('/all', async (req, res) => {
 	try {
@@ -14,21 +14,12 @@ router.get('/all', async (req, res) => {
 
 router.get('/scrap', async (req, res) => {
 	try {
-		const players = await scrap_players();
-		for (let idx = 0; idx < players.length; idx++) {
-			const player = players[idx];
-			console.log(`store player ${player.name}...`);
-			await db.player.upsert({
-				where: { name: player.name },
-				update: { player_id: player.id, img_blob: player.img_blob },
-				create: {
-					name: player.name,
-					player_id: player.id,
-					img_blob: player.img_blob,
-				},
-			});
+		const success = await update_players();
+		if (success) {
+			res.status(200).json('players scrapped');
+		} else {
+			res.status(500).json('fail to scrap players');
 		}
-		res.status(200).json('players scrapped');
 	} catch (e) {
 		console.log(e);
 		res.status(500).send('internal server error');
