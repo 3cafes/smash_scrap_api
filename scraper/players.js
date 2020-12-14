@@ -1,4 +1,4 @@
-const scraper = require.main.require('./scraper');
+const scraper = require('./base');
 
 const BASE_URL = 'https://www.smashbros.com';
 
@@ -19,12 +19,16 @@ async function scrap_players() {
 		async (page) => {
 			const data = await page.$$eval('li.fighter-list__item', (elems) => {
 				return elems.map((elem) => {
-					const id = elem.querySelector('em.fighter-list__num-txt').innerText;
-					const name = elem.querySelector('p.fighter-list__name-main')
-						.innerText;
-					const img_url = elem
-						.querySelector('div.fighter-list__img')
-						.style.backgroundImage.split('"')[1];
+					let id = '';
+					let name = '';
+					let img_url = '';
+					try {
+						id = elem.querySelector('em.fighter-list__num-txt').innerText;
+						name = elem.querySelector('p.fighter-list__name-main').innerText;
+						img_url = elem
+							.querySelector('div.fighter-list__img')
+							.style.backgroundImage.split('"')[1];
+					} catch (e) {}
 					return {
 						id,
 						name,

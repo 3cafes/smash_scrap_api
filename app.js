@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const readline = require('readline');
-const scraper = require('./scraper');
 const db = require('./database');
+const scraper = require('./scraper');
 const smash_scrap = require('./smash_scrap');
 
 const rl = readline.createInterface({
@@ -17,9 +17,13 @@ app.use('/api', require('./routes'));
 
 const CMD = {
 	quit: () => process.exit(),
-	scrap: async () => {
-		console.log('scrap players');
+	scrap_players: async () => {
+		console.log('scrap players...');
 		await smash_scrap.update_players();
+	},
+	scrap_items: async () => {
+		console.log('scrap items...');
+		await smash_scrap.update_items();
 	},
 };
 

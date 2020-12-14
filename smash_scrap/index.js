@@ -3,7 +3,7 @@
  * used by cli and express routes
  */
 
-const { scrap_players } = require.main.require('./scraper/player');
+const { scrap_players, scrap_items } = require.main.require('./scraper');
 const db = require.main.require('./database');
 
 async function update_players() {
@@ -30,6 +30,30 @@ async function update_players() {
 	return true;
 }
 
+async function update_items() {
+	try {
+		const items = await scrap_items();
+		for (let idx = 0; idx < items.length; idx++) {
+			const item = items[idx];
+			console.log(`store item ${item.name}...`);
+			await db.item.upsert({
+				where: { name: item.name },
+				update: { img_blob: item.img_blob },
+				create: {
+					name: item.name,
+					img_blob: item.img_blob,
+				},
+			});
+		}
+	} catch (e) {
+		console.log(e);
+		console.log('failed to update items.');
+		return false;
+	}
+	return true;
+}
+
 module.exports = {
 	update_players,
+	update_items,
 };
