@@ -18,6 +18,7 @@
    USE smash_scrap; \
    ALTER TABLE Player MODIFY img_blob BLOB(65536);
    ALTER TABLE Item MODIFY img_blob BLOB(65536);
+   ALTER TABLE Stage MODIFY img_blob BLOB(65536);
 
 ## run
 

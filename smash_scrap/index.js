@@ -3,7 +3,9 @@
  * used by cli and express routes
  */
 
-const { scrap_players, scrap_items } = require.main.require('./scraper');
+const { scrap_players, scrap_items, scrap_stages } = require.main.require(
+	'./scraper'
+);
 const db = require.main.require('./database');
 
 async function update_players() {
@@ -22,6 +24,7 @@ async function update_players() {
 				},
 			});
 		}
+		console.log('done !');
 	} catch (e) {
 		console.log(e);
 		console.log('failed to update players.');
@@ -45,6 +48,7 @@ async function update_items() {
 				},
 			});
 		}
+		console.log('done !');
 	} catch (e) {
 		console.log(e);
 		console.log('failed to update items.');
@@ -53,7 +57,32 @@ async function update_items() {
 	return true;
 }
 
+async function update_stages() {
+	try {
+		const stages = await scrap_stages();
+		for (let idx = 0; idx < stages.length; idx++) {
+			const stage = stages[idx];
+			console.log(`store stages ${stage.name}...`);
+			await db.stage.upsert({
+				where: { name: stage.name },
+				update: { img_blob: stage.img_blob },
+				create: {
+					name: stage.name,
+					img_blob: stage.img_blob,
+				},
+			});
+		}
+		console.log('done !');
+	} catch (e) {
+		console.log(e);
+		console.log('failed to update stages.');
+		return false;
+	}
+	return true;
+}
+
 module.exports = {
 	update_players,
 	update_items,
+	update_stages,
 };

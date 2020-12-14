@@ -19,3 +19,9 @@ model Item {
   name      String @unique
   img_blob  String
 }
+
+model Stage {
+  id        Int @id @default(autoincrement())
+  name      String @unique
+  img_blob  String
+}

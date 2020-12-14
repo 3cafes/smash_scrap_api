@@ -25,11 +25,15 @@ const CMD = {
 		console.log('scrap items...');
 		await smash_scrap.update_items();
 	},
+	scrap_stages: async () => {
+		console.log('scrap stages...');
+		await smash_scrap.update_stages();
+	},
 };
 
 async function cli() {
-	const prompt =
-		'what do you want to do next ? (scrap_players, scrap_items, quit)';
+	const prompt = `what do you want to do next ?
+(scrap_players, scrap_items, scrap_stages, quit)`;
 	console.log(prompt);
 	for await (const action of rl) {
 		if (CMD[action]) {
