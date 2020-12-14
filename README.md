@@ -2,23 +2,23 @@
 
 ## setup
 
-0. **dependences** \
+0. **dependances** \
    npm install
 
 1. **aller dans le dossier prisma et modifier la variable DATABASE_URL** \
    'mysql://USER:PASSWORD@HOST:PORT/DATABASE'
 
-2. **initializer la base de donnée** \
+2. **initialiser la base de données** \
    npx prisma migrate dev --preview-feature
 
 3. **générer le client prisma** \
    npx prisma generate
 
-4. **prisma ne supporte pas encore les blob (oups, j'aurais du utiliser sequelize) se connecter à la base de donnée mysql et faire les commandes suivantes:** \
+4. **prisma ne supporte pas encore les blobs (oups, j'aurais du utiliser sequelize). Se connecter à la base de données mysql et faire les commandes suivantes:** \
    USE smash_scrap; \
-   ALTER TABLE Player MODIFY img_blob BLOB(65536);
-   ALTER TABLE Item MODIFY img_blob BLOB(65536);
-   ALTER TABLE Stage MODIFY img_blob BLOB(65536);
+   ALTER TABLE Player MODIFY img_blob BLOB(131072);
+   ALTER TABLE Item MODIFY img_blob BLOB(131072);
+   ALTER TABLE Stage MODIFY img_blob BLOB(131072);
 
 ## run
 
@@ -31,7 +31,19 @@ npm start
 ## routes
 
 GET /api/player/all \
-retourne les players sauvegardés en base de donnée
+retourne les players sauvegardés en base de données
 
 GET /api/player/scrap \
-scrap les player sur le site de smash bros et les sauvegarde en base de donnée
+scrap les players sur le site de smash bros et les sauvegardes en base de données
+
+GET /api/item/all \
+retourne les items sauvegardés en base de données
+
+GET /api/item/scrap \
+scrap les items sur le site de smash bros et les sauvegardes en base de données
+
+GET /api/stage/all \
+retourne les stages sauvegardés en base de données
+
+GET /api/stage/scrap \
+scrap les stages sur le site de smash bros et les sauvegardes en base de données

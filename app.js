@@ -5,18 +5,7 @@ const db = require('./database');
 const scraper = require('./scraper');
 const smash_scrap = require('./smash_scrap');
 
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout,
-});
-
-const app = express();
-const port = 3001;
-app.use(cors());
-app.use('/api', require('./routes'));
-
 const CMD = {
-	quit: () => process.exit(),
 	scrap_players: async () => {
 		console.log('scrap players...');
 		await smash_scrap.update_players();
@@ -31,29 +20,60 @@ const CMD = {
 	},
 };
 
+var server;
+const app = express();
+const port = 3001;
+app.use(cors());
+
+//API ROUTES
+app.use('/api', require('./routes'));
+
+async function read_cmd(prompt) {
+	var response;
+	const rl = readline.createInterface({
+		input: process.stdin,
+		output: process.stdout,
+	});
+	rl.setPrompt(prompt);
+	rl.prompt();
+	return new Promise((resolve, reject) => {
+		rl.on('line', (userInput) => {
+			response = userInput;
+			rl.close();
+		});
+		rl.on('close', () => {
+			resolve(response);
+		});
+	});
+}
+
 async function cli() {
 	const prompt = `what do you want to do next ?
-(scrap_players, scrap_items, scrap_stages, quit)`;
-	console.log(prompt);
-	for await (const action of rl) {
+(scrap_players, scrap_items, scrap_stages, quit)
+$ `;
+	let run = true;
+	while (run) {
+		const action = await read_cmd(prompt);
 		if (CMD[action]) {
 			await CMD[action]();
+		} else if (action == 'quit') {
+			run = false;
+			process.exit(0);
 		} else {
 			console.log('Unknow command.');
 		}
-		console.log(prompt);
 	}
 }
 
-app.listen(port, async () => {
+server = app.listen(port, async () => {
 	await scraper.init();
 	console.log(`Example app listening at http://localhost:${port}`);
 
-	cli();
+	await cli();
 });
 
 process.on('exit', async () => {
 	console.log('goodbye.');
-	rl.close();
 	await db.$disconnect();
+	server.close();
 });
