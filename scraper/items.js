@@ -1,5 +1,7 @@
 const scraper = require('./base');
 
+const BASE_URL = 'https://www.smashbros.com';
+
 async function download_items_img(items) {
 	return Promise.all(
 		items.map(async (item) => {
@@ -11,7 +13,7 @@ async function download_items_img(items) {
 
 async function scrap_items() {
 	const items = await scraper.scrap_page(
-		'https://www.smashbros.com/en_US/item/index.html',
+		`${BASE_URL}/en_US/item/index.html`,
 		async (page) => {
 			const data = await page.$$eval('div.item-item-list__body', (elems) => {
 				return elems.map((elem) => {

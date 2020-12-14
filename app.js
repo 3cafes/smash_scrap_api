@@ -28,14 +28,16 @@ const CMD = {
 };
 
 async function cli() {
-	console.log('what do you want to do next ? (scrap, quit)');
+	const prompt =
+		'what do you want to do next ? (scrap_players, scrap_items, quit)';
+	console.log(prompt);
 	for await (const action of rl) {
 		if (CMD[action]) {
 			await CMD[action]();
 		} else {
 			console.log('Unknow command.');
 		}
-		console.log('What do you want to do next ? [scrap, quit]');
+		console.log(prompt);
 	}
 }
 
