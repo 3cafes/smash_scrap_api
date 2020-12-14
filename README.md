@@ -16,8 +16,8 @@
 
 4. **prisma ne supporte pas encore les blobs (oups, j'aurais du utiliser sequelize). Se connecter à la base de données mysql et faire les commandes suivantes:** \
    USE smash_scrap; \
-   ALTER TABLE Player MODIFY img_blob BLOB(131072);
-   ALTER TABLE Item MODIFY img_blob BLOB(131072);
+   ALTER TABLE Player MODIFY img_blob BLOB(131072); \
+   ALTER TABLE Item MODIFY img_blob BLOB(131072); \
    ALTER TABLE Stage MODIFY img_blob BLOB(131072);
 
 ## run
